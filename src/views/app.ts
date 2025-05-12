@@ -17,6 +17,14 @@ app.doc("/reference", {
       url: "http://localhost:3000",
       description: "Development server",
     },
+    {
+      url: "https://kitabku.vercel.app",
+      description: "Production server",
+    },
+    {
+      url: "https://kitabku-api.vercel.app",
+      description: "Production server",
+    },
   ],
 });
 

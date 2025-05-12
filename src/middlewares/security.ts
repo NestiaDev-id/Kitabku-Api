@@ -154,6 +154,7 @@ const corsMiddleware = cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:5173", // Vite default
+    "https://kitabku.vercel.app",
     "https://kitabku-api.vercel.app",
     // Tambahkan domain produksi lainnya
   ],
