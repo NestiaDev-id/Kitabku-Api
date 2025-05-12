@@ -90,7 +90,7 @@ app.get("/", (c) => {
         </div>
 
         <rapi-doc 
-          spec-url="/api/reference"
+          spec-url="/reference"
           theme="dark"
           bg-color="#111827"
           text-color="#F3F4F6"
