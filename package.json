@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "description": "Bible API using Hono",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "vercel dev",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "start": "node api/index.js",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"api/**/*.{ts,tsx}\"",
+    "lint": "eslint src api --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "vercel-build": "tsc"
   },
   "dependencies": {
