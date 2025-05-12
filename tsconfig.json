@@ -4,19 +4,11 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "module": "NodeNext",
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "strict": true,
     "outDir": "./dist",
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    
+    "skipLibCheck": true
   },
   "exclude": ["node_modules"]
 }
