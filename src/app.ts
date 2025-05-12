@@ -53,8 +53,7 @@ To get started with the Kitabku API, you can:
 3. View example responses for each endpoint
 
 ## Base URL
-- Development: http://localhost:3000
-- Production: https://kitabku.vercel.app
+Production: https://kitabku.vercel.app
 
 ## Rate Limiting
 To ensure fair usage, the API is rate-limited to 100 requests per 15 minutes per IP.
@@ -73,12 +72,8 @@ The API is currently open and does not require authentication.
   },
   servers: [
     {
-      url: "http://localhost:3000",
-      description: "Development server",
-    },
-    {
       url: "https://kitabku.vercel.app",
-      description: "Production server",
+      description: "Production Server",
     },
   ],
   tags: [
@@ -175,7 +170,7 @@ app.get("/", (c) => {
             show-header="false"
             show-info="true"
             allow-authentication="false"
-            allow-server-selection="true"
+            allow-server-selection="false"
             schema-style="table"
             schema-description-expanded="true"
             default-schema-tab="example"
