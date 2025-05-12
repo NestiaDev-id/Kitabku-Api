@@ -1,16 +1,28 @@
 import { serve } from "@hono/node-server";
-import { OpenAPIHono } from "@hono/zod-openapi";
 import { Hono } from "hono";
-
 import app from "./app.js";
 
-const serverConfig = {
+const port = process.env.PORT || 3000;
+
+const server = serve({
   fetch: app.fetch,
-  port: 3001,
-};
+  port: Number(port),
+});
 
-function logCallback(info: { port: number }): void {
-  console.warn(`Server is running on http://localhost:${info.port}`);
-}
+console.warn(`Server is running on http://localhost:${port}`);
 
-serve(serverConfig, logCallback);
+// Graceful shutdown
+process.on("SIGINT", () => {
+  server.close();
+  process.exit(0);
+});
+
+process.on("SIGTERM", () => {
+  server.close((err) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    process.exit(0);
+  });
+});
