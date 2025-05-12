@@ -220,7 +220,7 @@ app.get("/", (c) => {
 app.get(
   "/swagger",
   swaggerUI({
-    url: "/api/reference",
+    url: "/reference",
   })
 );
 
