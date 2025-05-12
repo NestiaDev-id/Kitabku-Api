@@ -15,6 +15,14 @@ app.doc("/reference", {
             url: "http://localhost:3000",
             description: "Development server",
         },
+        {
+            url: "https://kitabku.vercel.app",
+            description: "Production server",
+        },
+        {
+            url: "https://kitabku-api.vercel.app",
+            description: "Production server",
+        },
     ],
 });
 // Mount Bible routes
@@ -86,7 +94,7 @@ app.get("/", (c) => {
         </div>
 
         <rapi-doc 
-          spec-url="/api/reference"
+          spec-url="/reference"
           theme="dark"
           bg-color="#111827"
           text-color="#F3F4F6"
