@@ -2,26 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/**/*.js",
+      "src": "api/**/*.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/dist/src/index.js"
-    },
-    {
-      "src": "/reference",
-      "dest": "/dist/src/index.js"
-    },
-    {
-      "src": "/swagger",
-      "dest": "/dist/src/index.js"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/dist/src/index.js"
+      "dest": "/api/index.ts"
     }
   ]
 }
