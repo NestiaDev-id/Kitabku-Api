@@ -13,7 +13,7 @@ app.use("*", cors());
 app.use("*", ...securityMiddleware);
 
 // API Documentation
-app.doc("/reference", {
+app.doc("/api/reference", {
   openapi: "3.0.0",
   info: {
     title: "Kitabku API",
@@ -36,10 +36,10 @@ To get started with the Kitabku API, you can:
 
 ## Base URL
 - Development: http://localhost:3000
-- Production: https://kitabku-api.vercel.app
+- Production: https://kitabku.vercel.app
 
 ## Rate Limiting
-Currently, there are no rate limits implemented.
+To ensure fair usage, the API is rate-limited to 100 requests per 15 minutes per IP.
 
 ## Authentication
 The API is currently open and does not require authentication.
@@ -59,7 +59,7 @@ The API is currently open and does not require authentication.
       description: "Development server",
     },
     {
-      url: "https://kitabku-api.vercel.app",
+      url: "https://kitabku.vercel.app",
       description: "Production server",
     },
   ],
@@ -146,7 +146,7 @@ app.get("/", (c) => {
         </div>
 
         <rapi-doc 
-            spec-url="/reference"
+            spec-url="/api/reference"
             theme="dark"
             bg-color="#111827"
             text-color="#F3F4F6"
@@ -202,7 +202,7 @@ app.get("/", (c) => {
 app.get(
   "/swagger",
   swaggerUI({
-    url: "/reference",
+    url: "/api/reference",
   })
 );
 

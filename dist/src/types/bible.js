@@ -4,6 +4,7 @@ export const VerseSchema = z.object({
     chapter: z.number().describe("Chapter number"),
     verse: z.number().describe("Verse number"),
     text: z.string().describe("Verse text content"),
+    language: z.enum(["en", "id"]).describe("Language of the verse text"),
 });
 export const BookSchema = z.object({
     name: z.string().describe("Name of the book"),
