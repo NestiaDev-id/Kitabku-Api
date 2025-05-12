@@ -2,24 +2,75 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { swaggerUI } from "@hono/swagger-ui";
 import bibleRoutes from "./routes/bible.js";
 import { cors } from "hono/cors";
+import { securityMiddleware } from "./middlewares/security.js";
 
 const app = new OpenAPIHono();
 
 // Add CORS middleware
 app.use("*", cors());
 
+// Apply security middleware
+app.use("*", ...securityMiddleware);
+
 // API Documentation
 app.doc("/reference", {
   openapi: "3.0.0",
   info: {
-    title: "Bible API",
+    title: "Kitabku API",
     version: "1.0.0",
-    description: "API for accessing Bible verses and books",
+    description: `
+# Introduction
+Welcome to the Kitabku API - your gateway to accessing Bible verses and books programmatically. This API provides easy access to biblical content with powerful search and filtering capabilities.
+
+## Features
+- Get list of all Bible books
+- Get detailed information about specific books
+- Search verses by book and chapter
+- Filter verses with various parameters
+
+## Getting Started
+To get started with the Kitabku API, you can:
+1. Browse the available endpoints below
+2. Try out the API using the interactive documentation
+3. View example responses for each endpoint
+
+## Base URL
+- Development: http://localhost:3000
+- Production: https://kitabku-api.vercel.app
+
+## Rate Limiting
+Currently, there are no rate limits implemented.
+
+## Authentication
+The API is currently open and does not require authentication.
+    `,
+    contact: {
+      name: "API Support",
+      url: "https://github.com/NestiaDev-id/Kitabku-Api",
+    },
+    license: {
+      name: "MIT",
+      url: "https://opensource.org/licenses/MIT",
+    },
   },
   servers: [
     {
       url: "http://localhost:3000",
       description: "Development server",
+    },
+    {
+      url: "https://kitabku-api.vercel.app",
+      description: "Production server",
+    },
+  ],
+  tags: [
+    {
+      name: "Books",
+      description: "Operations about Bible books",
+    },
+    {
+      name: "Verses",
+      description: "Operations about Bible verses",
     },
   ],
 });
@@ -35,13 +86,16 @@ app.get("/", (c) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Kitabku API</title>
+        <title>Kitabku API - Bible API Documentation</title>
         <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
         <style>
             body { 
                 margin: 0;
                 padding: 0;
-                font-family: system-ui, -apple-system, sans-serif;
+                font-family: 'Inter', system-ui, -apple-system, sans-serif;
             }
             .loading-container {
                 position: fixed;
@@ -69,6 +123,7 @@ app.get("/", (c) => {
                 margin-top: 80px;
                 color: #F3F4F6;
                 font-size: 16px;
+                font-weight: 500;
             }
             @keyframes spin {
                 to { transform: rotate(360deg); }
@@ -96,16 +151,30 @@ app.get("/", (c) => {
             bg-color="#111827"
             text-color="#F3F4F6"
             primary-color="#4F46E5"
-            render-style="focused"
-            regular-font="system-ui"
+            render-style="read"
+            regular-font="Inter"
+            mono-font="JetBrains Mono"
             show-header="false"
             show-info="true"
             allow-authentication="false"
-            allow-server-selection="false"
+            allow-server-selection="true"
             schema-style="table"
             schema-description-expanded="true"
             default-schema-tab="example"
-        > </rapi-doc>
+            nav-bg-color="#1F2937"
+            nav-text-color="#F3F4F6"
+            nav-hover-bg-color="#374151"
+            nav-accent-color="#4F46E5"
+            nav-item-spacing="relaxed"
+            layout="row"
+            use-path-in-nav-bar="true"
+            show-components="true"
+            show-method-in-nav-bar="true"
+        > 
+            <div slot="nav-logo" style="display: flex; align-items: center; padding: 16px;">
+                <span style="color: #F3F4F6; font-size: 24px; font-weight: 600;">Kitabku API</span>
+            </div>
+        </rapi-doc>
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -113,7 +182,9 @@ app.get("/", (c) => {
                 
                 // Hide loading when RapiDoc is ready
                 document.querySelector('rapi-doc').addEventListener('spec-loaded', () => {
-                    loadingOverlay.classList.add('hidden');
+                    setTimeout(() => {
+                        loadingOverlay.classList.add('hidden');
+                    }, 500);
                 });
 
                 // Show loading when navigating
@@ -127,7 +198,12 @@ app.get("/", (c) => {
   `);
 });
 
-// Swagger UI route
-app.get("/swagger", swaggerUI({ url: "/reference" }));
+// Swagger UI route (alternative documentation)
+app.get(
+  "/swagger",
+  swaggerUI({
+    url: "/reference",
+  })
+);
 
 export default app;
