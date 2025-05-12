@@ -7,13 +7,31 @@ import { securityMiddleware } from "./middlewares/security.js";
 const app = new OpenAPIHono();
 
 // Add CORS middleware
-app.use("*", cors());
+app.use(
+  "*",
+  cors({
+    origin: [
+      "https://kitabku.vercel.app",
+      "https://kitabku-api.vercel.app",
+      "http://localhost:3000",
+    ],
+    allowMethods: ["GET"],
+    allowHeaders: ["Content-Type", "Authorization", "X-API-Key"],
+    exposeHeaders: [
+      "X-RateLimit-Limit",
+      "X-RateLimit-Remaining",
+      "X-RateLimit-Reset",
+    ],
+    maxAge: 600,
+    credentials: true,
+  })
+);
 
 // Apply security middleware
 app.use("*", ...securityMiddleware);
 
 // API Documentation
-app.doc("/api/reference", {
+app.doc("/reference", {
   openapi: "3.0.0",
   info: {
     title: "Kitabku API",
@@ -146,7 +164,7 @@ app.get("/", (c) => {
         </div>
 
         <rapi-doc 
-            spec-url="/api/reference"
+            spec-url="/reference"
             theme="dark"
             bg-color="#111827"
             text-color="#F3F4F6"
