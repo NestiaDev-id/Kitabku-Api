@@ -1,8 +1,12 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { swaggerUI } from "@hono/swagger-ui";
 import bibleRoutes from "../routes/bible.js";
+import { securityMiddleware } from "../middlewares/security.js";
 
 const app = new OpenAPIHono();
+
+// Apply security middleware
+app.use("*", ...securityMiddleware);
 
 // API Documentation
 app.doc("/reference", {
@@ -10,7 +14,43 @@ app.doc("/reference", {
   info: {
     title: "Bible API",
     version: "1.0.0",
-    description: "API for accessing Bible verses and books",
+    description: `API for accessing Bible verses and books.
+# Introduction
+Welcome to the Kitabku API - your gateway to accessing Bible verses and books programmatically. This API provides easy access to biblical content with powerful search and filtering capabilities.
+
+## Features
+- Get a list of all Bible books
+- Retrieve detailed information about specific books
+- Search verses by book and chapter
+- Filter verses with various parameters
+
+## Getting Started
+To get started with the Kitabku API, you can:
+1. Browse the available endpoints below
+2. Try out the API using the interactive documentation
+3. View example responses for each endpoint
+
+## Base URL
+Production: https://kitabku.vercel.app
+
+## Rate Limiting
+To ensure fair usage, the API is rate-limited to 100 requests per 15 minutes per IP.
+
+## Security Features
+To enhance the security of the API, the following measures have been implemented:
+- **GeoIP Restriction**: Access is restricted to users from Indonesia. Requests from other regions are denied.
+- **VPN/Proxy Detection**: Requests originating from VPNs or proxies are blocked using ASN (Autonomous System Numbers) and IP validation.
+- **CORS Policy**: Only specific domains are allowed to access the API, ensuring controlled cross-origin requests.
+- **Request Validation**: Strict validation of request headers, body size, and query parameters to prevent malicious inputs.
+- **Bot Protection**: Automated access from bots, crawlers, or suspicious user-agents is denied.
+- **Enhanced Security Headers**: HTTP headers are configured to prevent common vulnerabilities such as clickjacking, MIME sniffing, and XSS attacks.
+- **Rate Limiting**: Limits the number of requests per IP to prevent abuse and DDoS attacks.
+- **IP Filtering**: Blacklisted IPs are blocked from accessing the API.
+
+## Authentication
+The API is currently open and does not require authentication.
+
+`,
   },
   servers: [
     {

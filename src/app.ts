@@ -34,15 +34,15 @@ app.use("*", ...securityMiddleware);
 app.doc("/reference", {
   openapi: "3.0.0",
   info: {
-    title: "Kitabku API",
+    title: "Bible API",
     version: "1.0.0",
-    description: `
+    description: `API for accessing Bible verses and books.
 # Introduction
 Welcome to the Kitabku API - your gateway to accessing Bible verses and books programmatically. This API provides easy access to biblical content with powerful search and filtering capabilities.
 
 ## Features
-- Get list of all Bible books
-- Get detailed information about specific books
+- Get a list of all Bible books
+- Retrieve detailed information about specific books
 - Search verses by book and chapter
 - Filter verses with various parameters
 
@@ -58,32 +58,34 @@ Production: https://kitabku.vercel.app
 ## Rate Limiting
 To ensure fair usage, the API is rate-limited to 100 requests per 15 minutes per IP.
 
+## Security Features
+To enhance the security of the API, the following measures have been implemented:
+- **GeoIP Restriction**: Access is restricted to users from Indonesia. Requests from other regions are denied.
+- **VPN/Proxy Detection**: Requests originating from VPNs or proxies are blocked using ASN (Autonomous System Numbers) and IP validation.
+- **CORS Policy**: Only specific domains are allowed to access the API, ensuring controlled cross-origin requests.
+- **Request Validation**: Strict validation of request headers, body size, and query parameters to prevent malicious inputs.
+- **Bot Protection**: Automated access from bots, crawlers, or suspicious user-agents is denied.
+- **Enhanced Security Headers**: HTTP headers are configured to prevent common vulnerabilities such as clickjacking, MIME sniffing, and XSS attacks.
+- **Rate Limiting**: Limits the number of requests per IP to prevent abuse and DDoS attacks.
+- **IP Filtering**: Blacklisted IPs are blocked from accessing the API.
+
 ## Authentication
 The API is currently open and does not require authentication.
-    `,
-    contact: {
-      name: "API Support",
-      url: "https://github.com/NestiaDev-id/Kitabku-Api",
-    },
-    license: {
-      name: "MIT",
-      url: "https://opensource.org/licenses/MIT",
-    },
+
+`,
   },
   servers: [
     {
       url: "https://kitabku.vercel.app",
-      description: "Production Server",
-    },
-  ],
-  tags: [
-    {
-      name: "Books",
-      description: "Operations about Bible books",
+      description: "Production server",
     },
     {
-      name: "Verses",
-      description: "Operations about Bible verses",
+      url: "https://kitabku-api.vercel.app",
+      description: "Production server",
+    },
+    {
+      url: "http://localhost:3000",
+      description: "Development server",
     },
   ],
 });

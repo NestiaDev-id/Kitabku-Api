@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import rateLimit from "hono-rate-limit";
 import { prettyJSON } from "hono/pretty-json";
 import { geoipMiddleware } from "./geoip.js";
+import { serve } from "@hono/node-server";
 
 // Daftar ASN (Autonomous System Numbers) VPN yang umum
 const vpnASNs = [
@@ -45,7 +46,11 @@ function isIPInRange(ip: string, range: string): boolean {
 // Region dan VPN Check Middleware
 const regionAndVPNCheck: MiddlewareHandler = async (c, next) => {
   const ip =
-    c.req.header("x-forwarded-for")?.split(",")[0] || c.env?.ip || "unknown";
+    c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ||
+    c.req.header("cf-connecting-ip") ||
+    c.req.header("x-real-ip") ||
+    c.env?.ip || // optional jika Anda set IP di env
+    "unknown";
   const asn = c.req.header("x-asn") || ""; // Membutuhkan konfigurasi di reverse proxy/load balancer
 
   // Skip untuk development
@@ -314,7 +319,15 @@ const botProtection: MiddlewareHandler = async (c, next) => {
 const requestLogger: MiddlewareHandler = async (c, next) => {
   const start = Date.now();
   const { method, url } = c.req;
-  const ip = c.req.header("x-forwarded-for") || c.env?.ip || "unknown";
+  const ip =
+    c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ||
+    c.req.header("cf-connecting-ip") || // Cloudflare
+    c.req.header("x-real-ip") || // Nginx
+    c.req.header("fastly-client-ip") || // Fastly
+    c.req.header("true-client-ip") || // Akamai
+    c.req.header("x-client-ip") ||
+    "unknown";
+
   const ua = c.req.header("user-agent") || "unknown";
 
   try {
@@ -356,6 +369,7 @@ export const securityMiddleware = [
   requestLogger, // Logging harus pertama
   corsMiddleware, // CORS sebelum rate limit
   geoipMiddleware, // GeoIP check (includes region restriction)
+  regionAndVPNCheck, // Region dan VPN check
   rateLimiter, // Rate limiting
   ipFilter, // IP filtering
   requestValidator, // Request validation
