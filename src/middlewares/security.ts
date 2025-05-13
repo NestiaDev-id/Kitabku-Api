@@ -328,6 +328,32 @@ const requestLogger: MiddlewareHandler = async (c, next) => {
     c.req.header("x-client-ip") ||
     "unknown";
 
+  // Log format dasar
+  console.log(
+    `${method} ${url} - ${ip} - ${c.res.status} - ${Date.now() - start}ms`
+  );
+  console.log(`User-Agent: ${c.req.header("user-agent")}`);
+  console.log(`Referer: ${c.req.header("referer")}`);
+
+  // Log format yang lebih informatif
+  console.log(
+    JSON.stringify(
+      {
+        timestamp: new Date().toISOString(),
+        method,
+        url,
+        status: c.res.status,
+        duration: `${Date.now() - start}ms`,
+        ip,
+        userAgent: c.req.header("user-agent"),
+        referer: c.req.header("referer"),
+      },
+      null,
+      2
+    )
+  );
+  console.log(ip);
+
   const ua = c.req.header("user-agent") || "unknown";
 
   try {
@@ -368,8 +394,8 @@ const requestLogger: MiddlewareHandler = async (c, next) => {
 export const securityMiddleware = [
   requestLogger, // Logging harus pertama
   corsMiddleware, // CORS sebelum rate limit
-  geoipMiddleware, // GeoIP check (includes region restriction)
-  regionAndVPNCheck, // Region dan VPN check
+  // geoipMiddleware, // GeoIP check (includes region restriction)
+  // regionAndVPNCheck, // Region dan VPN check
   rateLimiter, // Rate limiting
   ipFilter, // IP filtering
   requestValidator, // Request validation
