@@ -38,8 +38,8 @@ To ensure fair usage, the API is rate-limited to 100 requests per 15 minutes per
 
 ## Security Features
 To enhance the security of the API, the following measures have been implemented:
-- **GeoIP Restriction**: Access is restricted to users from Indonesia. Requests from other regions are denied.
-- **VPN/Proxy Detection**: Requests originating from VPNs or proxies are blocked using ASN (Autonomous System Numbers) and IP validation.
+- ~~GeoIP Restriction~~: Access is restricted to users from Indonesia. Requests from other regions are denied.
+- ~~VPN/Proxy Detection~~: Requests originating from VPNs or proxies are blocked using ASN (Autonomous System Numbers) and IP validation.
 - **CORS Policy**: Only specific domains are allowed to access the API, ensuring controlled cross-origin requests.
 - **Request Validation**: Strict validation of request headers, body size, and query parameters to prevent malicious inputs.
 - **Bot Protection**: Automated access from bots, crawlers, or suspicious user-agents is denied.
