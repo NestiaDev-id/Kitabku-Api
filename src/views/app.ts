@@ -33,24 +33,23 @@ To get started with the Kitabku API, you can:
 ## Base URL
 Production: https://kitabku.vercel.app
 
-## Rate Limiting
-To ensure fair usage, the API is rate-limited to 100 requests per 15 minutes per IP.
-
-## Security Features
-To enhance the security of the API, the following measures have been implemented:
-- ~~GeoIP Restriction: Access is restricted to users from Indonesia. Requests from other regions are denied.~~
-- ~~VPN/Proxy Detection: Requests originating from VPNs or proxies are blocked using ASN (Autonomous System Numbers) and IP validation.~~
-- **CORS Policy**: Only specific domains are allowed to access the API, ensuring controlled cross-origin requests.
-- **Request Validation**: Strict validation of request headers, body size, and query parameters to prevent malicious inputs.
-- **Bot Protection**: Automated access from bots, crawlers, or suspicious user-agents is denied.
-- **Enhanced Security Headers**: HTTP headers are configured to prevent common vulnerabilities such as clickjacking, MIME sniffing, and XSS attacks.
-- **Rate Limiting**: Limits the number of requests per IP to prevent abuse and DDoS attacks.
-- **IP Filtering**: Blacklisted IPs are blocked from accessing the API.
-
 ## Authentication
 The API is currently open and does not require authentication.
 
 `,
+    // ## Rate Limiting
+    // To ensure fair usage, the API is rate-limited to 100 requests per 15 minutes per IP.
+
+    // ## Security Features
+    // To enhance the security of the API, the following measures have been implemented:
+    // - ~~GeoIP Restriction: Access is restricted to users from Indonesia. Requests from other regions are denied.~~
+    // - ~~VPN/Proxy Detection: Requests originating from VPNs or proxies are blocked using ASN (Autonomous System Numbers) and IP validation.~~
+    // - **CORS Policy**: Only specific domains are allowed to access the API, ensuring controlled cross-origin requests.
+    // - **Request Validation**: Strict validation of request headers, body size, and query parameters to prevent malicious inputs.
+    // - **Bot Protection**: Automated access from bots, crawlers, or suspicious user-agents is denied.
+    // - **Enhanced Security Headers**: HTTP headers are configured to prevent common vulnerabilities such as clickjacking, MIME sniffing, and XSS attacks.
+    // - **Rate Limiting**: Limits the number of requests per IP to prevent abuse and DDoS attacks.
+    // - **IP Filtering**: Blacklisted IPs are blocked from accessing the API.
   },
   servers: [
     {

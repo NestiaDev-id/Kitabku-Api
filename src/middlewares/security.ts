@@ -370,8 +370,8 @@ export const securityMiddleware = [
   corsMiddleware, // CORS sebelum rate limit
   // geoipMiddleware, // GeoIP check (includes region restriction)
   // regionAndVPNCheck, // Region dan VPN check
-  rateLimiter, // Rate limiting
-  ipFilter, // IP filtering
+  // rateLimiter, // Rate limiting
+  // ipFilter, // IP filtering
   requestValidator, // Request validation
   botProtection, // Bot protection
   securityHeaders, // Security headers
